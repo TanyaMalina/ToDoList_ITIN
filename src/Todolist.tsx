@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 //import Checkbox from '@mui/material/Checkbox';
 import ButtonAppBar from "./ButtonAppBar";
 import {CheckBox} from "./components/CheckBox";
-import {changeTodolistTitleAC} from "./store/todolists-reducer";
+import {changeTodolistTitleAC} from "./state/todolists-reducer";
 
 
 export type TaskType = {

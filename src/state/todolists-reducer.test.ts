@@ -1,4 +1,4 @@
-import {removeTodolistAC, changeTodolistTitleAC, changeFilterAC, TodolistsReducer, addTodoListAC} from './todolists-reducer'
+import {removeTodolistAC, changeTodolistTitleAC, changeFilterAC, TodolistsReducer, addTodolistAC} from './todolists-reducer'
 import { v1 } from 'uuid'
 import {FilterValuesType, TodolistType} from '../App'
 
@@ -28,7 +28,7 @@ test('correct todolist should be added', () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 
-    const endState = TodolistsReducer(startState, addTodoListAC(newTodolistTitle))
+    const endState = TodolistsReducer(startState, addTodolistAC(newTodolistTitle))
 
     expect(endState.length).toBe(3)
     expect(endState[2].title).toBe(newTodolistTitle)
