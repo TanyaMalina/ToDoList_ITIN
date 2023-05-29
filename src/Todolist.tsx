@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import ButtonAppBar from "./ButtonAppBar";
 import {CheckBox} from "./components/CheckBox";
 import {changeTodolistTitleAC} from "./state/todolists-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import {TasksStateType, TodolistType} from "./AppWithRedux";
 
 
 export type TaskType = {
@@ -71,6 +74,7 @@ export function Todolist(props: PropsType) {
             </IconButton>
         </li>
     })
+
 
     return <div>
         <h3>
