@@ -1,4 +1,4 @@
-import React, {Reducer, useReducer, useState} from 'react';
+import React, {Reducer, useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
 import ButtonAppBar from "./ButtonAppBar";
@@ -34,10 +34,10 @@ function AppWithRedux() {
 
     const dispatch = useDispatch()
 
-    const addTodoList = (newTitle: string) => {
+    const addTodoList = useCallback((newTitle: string) => {
         const action = addTodolistAC(newTitle)
         dispatch(action)
-    }
+    },[dispatch])
 
     return (
         <div className="App">

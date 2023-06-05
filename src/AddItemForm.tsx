@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
@@ -6,7 +6,7 @@ type PropsType = {
     callBack: (title: string) => void
 }
 
-export const AddItemForm = (props: PropsType) => {
+export const AddItemForm = memo((props: PropsType) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -25,9 +25,9 @@ export const AddItemForm = (props: PropsType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+       if (error) setError(null)
         if (e.charCode === 13) {
-            addTask();
+            addTask()
         }
     }
 
@@ -55,4 +55,4 @@ export const AddItemForm = (props: PropsType) => {
             <Button onClick={addTask} size="small" style={buttonSettings}>+</Button>
         </div>
     )
-}
+})

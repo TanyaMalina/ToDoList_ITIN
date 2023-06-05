@@ -51,7 +51,7 @@ export function Todolist(props: PropsType) {
     }
 
     const updateTodoLitHandler = (newTitle: string) => {
-        props. updateTodoList(props.id, newTitle)
+        props.updateTodoList(props.id, newTitle)
     }
 
     const changeStatusHandler = (taskID:string, isDone:boolean)=>{
