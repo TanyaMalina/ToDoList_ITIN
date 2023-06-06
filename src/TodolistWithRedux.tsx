@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, useCallback, memo} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, useCallback, memo, useMemo} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,9 +32,9 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
 
     const dispatch = useDispatch()
 
-    const onAllClickHandler = () => dispatch(changeFilterAC(id, "all"))
-    const onActiveClickHandler = () => dispatch(changeFilterAC(id, "active"))
-    const onCompletedClickHandler = () => dispatch(changeFilterAC(id, "completed"))
+    const onAllClickHandler = useCallback(() => dispatch(changeFilterAC(id, "all")), [dispatch])
+    const onActiveClickHandler = useCallback(() => dispatch(changeFilterAC(id, "active")), [dispatch])
+    const onCompletedClickHandler = useCallback(() => dispatch(changeFilterAC(id, "completed")), [dispatch])
 
     const removeTodolist = () => {
         dispatch(removeTodolistAC(id))
@@ -93,15 +93,41 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
             })}
         </ul>
 
-        <div>
-            <Button variant={filter === 'all' ? "outlined" : "contained"} color="success"
-                    onClick={onAllClickHandler}>All</Button>
-            <Button variant={filter === 'active' ? "outlined" : "contained"} color="error"
-                    onClick={onActiveClickHandler}>Active</Button>
-            <Button variant={filter === 'completed' ? "outlined" : "contained"} color="secondary"
-                    onClick={onCompletedClickHandler}>Completed</Button>
+        <div style={{paddingTop: "10px"}}>
+            <ButtonWithMemo
+                title={'All'}
+                onClick={onAllClickHandler}
+                variant={filter === 'all' ? "outlined" : "contained"}
+                color={"success"}/>
+
+            <ButtonWithMemo
+                title={'Active'}
+                onClick={onActiveClickHandler}
+                variant={filter === 'active' ? "outlined" : "contained"}
+                color={"error"}/>
+
+            <ButtonWithMemo
+                title={'Completed'}
+                onClick={onCompletedClickHandler}
+                variant={filter === 'completed' ? "outlined" : "contained"}
+                color={"secondary"}/>
         </div>
     </div>
 })
 
+type ButtonWithMemoPropsType = {
+    title: string
+    onClick: () => void
+    variant: "text" | "outlined" | "contained"
+    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
+}
+
+const ButtonWithMemo = memo((props: ButtonWithMemoPropsType) => {
+    return <Button
+        variant={props.variant}
+        color={props.color}
+        onClick={props.onClick}>
+        {props.title}</Button>
+})
 
