@@ -13,6 +13,7 @@ import {AppRootStateType} from "./state/store";
 import {TodolistType} from "./AppWithRedux";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {Task} from "./Task";
+import {TaskWithRedux} from "./TaskWithRedux";
 
 export type TaskType = {
     id: string
@@ -36,9 +37,7 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
     const onActiveClickHandler = useCallback(() => dispatch(changeFilterAC(id, "active")), [dispatch])
     const onCompletedClickHandler = useCallback(() => dispatch(changeFilterAC(id, "completed")), [dispatch])
 
-    const removeTodolist = () => {
-        dispatch(removeTodolistAC(id))
-    }
+    const removeTodolist = () => dispatch(removeTodolistAC(id))
 
     const addTaskHandler = useCallback((title: string) => {
         dispatch(addTaskAC(title, id))
@@ -48,17 +47,6 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
         dispatch(changeTodolistTitleAC(id, newTitle))
     }, [dispatch])
 
-    const updateTaskHandler = useCallback((taskID: string, newTitle: string) => {
-        dispatch(changeTaskTitleAC(taskID, newTitle, id))
-    }, [dispatch])
-
-    const changeStatusHandler = (taskID: string, isDone: boolean) => {
-        dispatch(changeTaskStatusAC(taskID, isDone, id))
-    }
-
-    const removeTask = (taskID: string) => {
-        dispatch(removeTaskAC(taskID, id))
-    }
 
     if (filter === "active") {
         tasks = tasks.filter(t => t.isDone === false)
@@ -83,12 +71,10 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
                 //     let newIsDoneValue = e.currentTarget.checked;
                 //     dispatch(changeTaskStatusAC(t.id, newIsDoneValue, id))
                 // }
-                return <Task
+                return <TaskWithRedux
                     key={t.id}
                     task={t}
-                    changeTaskStatus={changeStatusHandler}
-                    changeTaskTitle={updateTaskHandler}
-                    removeTask={removeTask}
+                    todolistID={id}
                 />
             })}
         </ul>

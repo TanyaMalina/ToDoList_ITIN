@@ -16,7 +16,7 @@ export const Task = memo((props: TaskPropsType) => {
 
     const changeStatusHandler = () => props.changeTaskStatus(props.task.id, !props.task.isDone)
 
-    const updateTaskHandler = useCallback((taskID: string, newTitle: string) => {
+    const updateTaskHandler = useCallback((newTitle: string) => {
         props.changeTaskTitle(props.task.id, newTitle)
     }, [props.changeTaskTitle, props.task.id])
 
@@ -27,7 +27,7 @@ export const Task = memo((props: TaskPropsType) => {
             <CheckBox isDone={props.task.isDone}
                       callBack={changeStatusHandler}/>
             <EditableSpan oldTitle={props.task.title}
-                          callBack={(newTitle) => updateTaskHandler(props.task.id, newTitle)}/>
+                          callBack={(newTitle) => updateTaskHandler(newTitle)}/>
             <IconButton onClick={onClickHandler} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>
