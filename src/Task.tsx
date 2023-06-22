@@ -3,31 +3,35 @@ import {CheckBox} from "./components/CheckBox";
 import EditableSpan from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskType} from "./TodolistWithRedux";
+import {TaskType} from "./Todolist";
+import {useDispatch, useSelector} from "react-redux";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 
 export type TaskPropsType = {
     task: TaskType
-    removeTask: (taskID: string) => void
-    changeTaskStatus: (taskID: string, isDone: boolean) => void
-    changeTaskTitle: (taskID: string, newTitle: string) => void
+    todolistID: string
 }
 
-export const Task = memo((props: TaskPropsType) => {
+export const Task = memo(({task, todolistID}: TaskPropsType) => {
 
-    const changeStatusHandler = () => props.changeTaskStatus(props.task.id, !props.task.isDone)
+    const dispatch = useDispatch()
+
+    const changeStatusHandler = useCallback( (isDone:boolean) => {
+        dispatch(changeTaskStatusAC(task.id, isDone, todolistID))
+    }, [dispatch, task.id, todolistID])
 
     const updateTaskHandler = useCallback((newTitle: string) => {
-        props.changeTaskTitle(props.task.id, newTitle)
-    }, [props.changeTaskTitle, props.task.id])
+        dispatch(changeTaskTitleAC(task.id, newTitle, todolistID))
+    }, [dispatch, task.id, todolistID])
 
-    const onClickHandler = () => props.removeTask(props.task.id)
+    const onClickHandler = () => dispatch(removeTaskAC(task.id, todolistID))
 
     return (
-        <li className={props.task.isDone ? "is-done" : ""}>
-            <CheckBox isDone={props.task.isDone}
+        <li className={task.isDone ? "is-done" : ""}>
+            <CheckBox isDone={task.isDone}
                       callBack={changeStatusHandler}/>
-            <EditableSpan oldTitle={props.task.title}
-                          callBack={(newTitle) => updateTaskHandler(newTitle)}/>
+            <EditableSpan oldTitle={task.title}
+                          callBack={updateTaskHandler}/>
             <IconButton onClick={onClickHandler} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>
