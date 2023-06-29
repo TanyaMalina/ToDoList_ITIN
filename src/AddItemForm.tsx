@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import {AddBox} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 type PropsType = {
     callBack: (title: string) => void
@@ -25,19 +26,10 @@ export const AddItemForm = memo((props: PropsType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-       if (error) setError(null)
+        if (error) setError(null)
         if (e.charCode === 13) {
             addTask()
         }
-    }
-
-    const buttonSettings = {
-        maxWidth: '38px',
-        maxHeight: '38px',
-        minWidth: '38px',
-        minHeight: '38px',
-        backgroundColor: "blue",
-        color: "white"
     }
 
     return (<div>
@@ -52,7 +44,9 @@ export const AddItemForm = memo((props: PropsType) => {
                 error={!!error}
             />
 
-            <Button onClick={addTask} size="small" style={buttonSettings}>+</Button>
+            <IconButton onClick={addTask} color='primary'>
+                <AddBox/>
+            </IconButton>
         </div>
     )
 })

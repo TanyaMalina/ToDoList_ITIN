@@ -3,7 +3,8 @@ import {AddItemForm} from "../AddItemForm";
 import {action} from '@storybook/addon-actions'
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import {AddBox} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -59,15 +60,6 @@ export const AddItemFormErrorStory: Story = {
             }
         }
 
-        const buttonSettings = {
-            maxWidth: '38px',
-            maxHeight: '38px',
-            minWidth: '38px',
-            minHeight: '38px',
-            backgroundColor: "blue",
-            color: "white"
-        }
-
         return (<div>
                 <TextField
                     value={title}
@@ -80,7 +72,9 @@ export const AddItemFormErrorStory: Story = {
                     error={!!error}
                 />
 
-                <Button onClick={addTask} size="small" style={buttonSettings}>+</Button>
+                <IconButton onClick={addTask} color='primary'>
+                    <AddBox/>
+                </IconButton>
             </div>
         )
     }

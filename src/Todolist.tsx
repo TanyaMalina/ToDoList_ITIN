@@ -1,6 +1,5 @@
 import React, {ChangeEvent, useState, KeyboardEvent, useCallback, memo, useMemo} from 'react';
 import {AddItemForm} from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -13,6 +12,7 @@ import {AppRootStateType} from "./state/store";
 import {TodolistType} from "./App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {Task} from "./Task";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -56,7 +56,7 @@ export const Todolist = memo(({todolist}: PropsType) => {
 
     return <div>
         <h3>
-            <EditableSpan oldTitle={title} callBack={updateTodoLitHandler}/>
+            <EditableSpan value={title} onChange={updateTodoLitHandler}/>
             <IconButton onClick={removeTodolist} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>

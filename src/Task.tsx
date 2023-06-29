@@ -1,11 +1,11 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import {CheckBox} from "./components/CheckBox";
-import EditableSpan from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {TaskType} from "./Todolist";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskPropsType = {
     task: TaskType
@@ -30,8 +30,8 @@ export const Task = memo(({task, todolistID}: TaskPropsType) => {
         <li className={task.isDone ? "is-done" : ""}>
             <CheckBox isDone={task.isDone}
                       callBack={changeStatusHandler}/>
-            <EditableSpan oldTitle={task.title}
-                          callBack={updateTaskHandler}/>
+            <EditableSpan value={task.title}
+                          onChange={updateTaskHandler}/>
             <IconButton onClick={onClickHandler} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>

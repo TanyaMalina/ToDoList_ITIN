@@ -1,4 +1,4 @@
-import {tasksReducer} from './tasks-reducer'
+import {TasksReducer} from './tasks-reducer'
 import {TodolistsReducer} from './todolists-reducer'
 import {combineReducers, compose, createStore, legacy_createStore} from 'redux'
 
@@ -12,7 +12,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
+    tasks: TasksReducer,
     todolists: TodolistsReducer
 })
 // непосредственно создаём store
