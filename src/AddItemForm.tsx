@@ -1,23 +1,24 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import TextField from '@mui/material/TextField';
-import {AddBox} from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
+import IconButton from '@mui/material/IconButton';
+import { AddBox } from '@mui/icons-material';
 
-type PropsType = {
-    callBack: (title: string) => void
+type AddItemFormPropsType = {
+    addItem: (title: string) => void
 }
 
-export const AddItemForm = memo((props: PropsType) => {
-    let [title, setTitle] = useState("")
+export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
+    console.log('AddItemForm called')
+
+    let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
-    const addTask = () => {
-        let newTitle = title.trim();
-        if (newTitle !== "") {
-            props.callBack(newTitle);
-            setTitle("");
+    const addItem = () => {
+        if (title.trim() !== '') {
+            props.addItem(title);
+            setTitle('');
         } else {
-            setError("Title is required");
+            setError('Title is required');
         }
     }
 
@@ -26,27 +27,25 @@ export const AddItemForm = memo((props: PropsType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error) setError(null)
+        if (error !== null) {
+            setError(null);
+        }
         if (e.charCode === 13) {
-            addTask()
+            addItem();
         }
     }
 
-    return (<div>
-            <TextField
-                value={title}
-                onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
-                id="outlined-basic"
-                label={error ? "Title is required" : "Please type out..."}
-                variant="outlined"
-                size="small"
-                error={!!error}
-            />
-
-            <IconButton onClick={addTask} color='primary'>
-                <AddBox/>
-            </IconButton>
-        </div>
-    )
+    return <div>
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
+        />
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox/>
+        </IconButton>
+    </div>
 })
